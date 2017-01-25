@@ -1,6 +1,6 @@
 <?php
-	$start = $_POST['start'];
-	$len = $_POST['len'];
+	$start = $_GET['start'];
+	$len = $_GET['len'];
 	$items = array();
 
 	for($i=0;$i<$len;$i++){
