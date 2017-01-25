@@ -1,0 +1,9 @@
+app.get('/getMusic', function(req, res) {
+    console.log('ni hao');
+    console.log(req.query);
+    if (req.query.name === 'hunger') {
+        res.send('nihao hunger');
+    } else {
+        res.send('who are you');
+    }
+});
