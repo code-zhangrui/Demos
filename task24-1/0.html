@@ -1,0 +1,36 @@
+<!-- 需求是，在输入框输入用户名，点击按钮，打包请求后发给后台，后台响应对应的性别和年龄 -->
+<input type="text" name="username" id="username" placeholder="请输入用户名">
+<button id="btn">获取信息</button>
+<dl id="ct">
+<!-- 后台获取数据后浏览器进行操作，添加html -->
+</dl>
+<script type="text/javascript">
+    document.querySelector('#btn').addEventListener('click',function(){
+        var xmlhttp = new XMLHttpRequest();
+        var username = document.querySelector('#username').value;
+        var url = 'ajax_simple.php'+'?username='+username;
+
+        //GET方式
+        // xmlhttp.open('GET',url,true);
+        // xmlhttp.send();
+
+        //POST方式：
+        xmlhttp.open('POST','ajax_simple.php',true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("username="+username);
+
+        xmlhttp.onreadystatechange = function(){
+            if(xmlhttp.readyState==4 && xmlhttp.status==200){
+                var userInfo = JSON.parse(xmlhttp.responseText);
+                dealwith(userInfo);
+            }
+        }
+    });
+    function dealwith(userInfo){
+        var str = '<dt>性别：</dt>';
+        str += '<dd>'+userInfo.sex+'</dd>';
+        str += '<dt>年龄：</dt>';
+        str += '<dd>'+userInfo.age+'</dd>';
+        document.querySelector('#ct').innerHTML = str;
+    }
+</script>
