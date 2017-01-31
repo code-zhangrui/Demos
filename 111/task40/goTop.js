@@ -1,4 +1,4 @@
-define(['jquery.min.ks'], function( $ ) {
+define(['jquery.min.js'], function( $ ) {
 
 
 	function goTop(id) {
