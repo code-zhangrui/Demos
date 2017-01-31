@@ -47,7 +47,7 @@ define(["jquery.min.js"], function() {
                     }
                 };
 
-                //new goTop();
+                new goTop();
 
 
                 return goTop;
