@@ -1,46 +1,54 @@
+define(["jquery.min.js"], function() {
 
-define(["jquery.min.js"],function () {
+            function goTop(ct) {
+                function goTop(id) {
+                    this.id = id || 'gotop';
+                    this.init();
+                }
 
-    function goTop(ct) {
-        this.ct=ct;
-        this.target=$('<i class="fa fa-caret-square-o-up fa-4x goTop" aria-hidden="true"></i>');
-        goTopCt=this.ct;
-        goTopTr=this.target;
-        this.createNode();
-        this.bindEvent();
-    }
-    goTop.prototype={
-        bindEvent:function () {
-            $(window).on("scroll",function () {
-                function canShow() {
-                    var windowH=$(window).height(),
-                        scrollH=$(window).scrollTop();
-                    if (scrollH>windowH){
-                        return true;
+                goTop.prototype = {
+                    init: function() {
+                        var $el = $('#' + this.id);
+                        if ($el.length === 0) {
+                            console.log('回到顶部');
+                            this.$el = $('<div id="' + this.id + '" style="position: fixed; right: 10px; bottom: 10px; ">回到顶部</div>');
+                            $('body').append(this.$el);
+                        } else {
+                            this.$el = $el;
+                        }
+                        this.$c = $(document);
+
+                        this.bind();
+                    },
+
+                    bind: function() {
+                        var me = this;
+
+                        this.$el.on('click', function() {
+                            me.goToTop();
+                        });
+
+                        this.$c.on('scroll', function() {
+                            me.scroll();
+                        });
+                    },
+
+                    goToTop: function() {
+                        this.$c.scrollTop(0);
+                    },
+
+                    scroll: function(e) {
+                        var scrollTop = this.$c.scrollTop();
+                        if (scrollTop > 200) {
+                            this.$el.show();
+                        } else {
+                            this.$el.hide();
+                        }
                     }
-                    else {return false}
-                }
-                if (canShow()){
-                    goTopTr.show();
-                    $(".ct-nav").css({"background-color":"#333"})
-                }
-                else {
-                    goTopTr.hide();
-                    $(".ct-nav").removeAttr("style")
-                }
-            }) ;
-            goTopTr.on('click',function () {
-                $('html,body').animate({"scrollTop":"0px"},800)
+                };
+
+                //new goTop();
+
+
+                return goTop;
             });
-        },
-        createNode:function (){
-            $(goTopCt).append(goTopTr)
-        }
-    };
-    var GoTop1= new goTop('body');
-
-
-
-
-    return { GoTop1 };
-});
