@@ -1,3 +1,3 @@
 
 
-define(["mygotop4.js"]);
+define(["mygotop5.js"]);
