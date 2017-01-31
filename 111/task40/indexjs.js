@@ -1,3 +1,3 @@
 
 
-define(["/goTop"]);
+define(["goTop.js"]);
