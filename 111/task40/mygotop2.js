@@ -8,9 +8,7 @@ define(['jquery.min.js'], function() {
         this.showBtn();
         this.gotop();
     };
-    createNode: function() {
-        $('body').append($returnTop);
-    }
+
     goTop.prototype = {
         showBtn: function() {
             $(window).on('scroll', function() {
@@ -38,6 +36,8 @@ define(['jquery.min.js'], function() {
             $returnTop.on('click', function() {
                 $(window).scrollTop(0);
             });
+        }; createNode: function() {
+            $('body').append($returnTop);
         };
     };
     var gotop1 = new goTop('body');
