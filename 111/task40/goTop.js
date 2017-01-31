@@ -1,5 +1,5 @@
 
-define(["jquery-3.1.1.min.js"],function () {
+define(["jquery.min.js"],function () {
 
     function goTop(ct) {
         this.ct=ct;
