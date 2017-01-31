@@ -17,7 +17,7 @@ define(['jquery.min.js'], function() {
                 if (top > 50) {
                     $returnTop.show();
                     $(".ct-nav").css({
-                        position: fixed;
+                        position: "fixed";
                         bottom: 10 px;
                         right: 10 px;
                         border: 1 px solid;
