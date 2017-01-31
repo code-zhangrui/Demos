@@ -16,17 +16,7 @@ define(['jquery.min.js'], function() {
                 console.log(top);
                 if (top > 50) {
                     $returnTop.show();
-                    $("#return-top").css({
-
-                        bottom: 10 px;
-                        right: 10 px;
-                        border: 1 px solid;
-                        padding: 10 px;
-                        cursor: pointer;
-                        display: none;
-                        background: black;
-                        color: white;
-                    })
+                  
                 } else {
                     $returnTop.hide();
                 }
