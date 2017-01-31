@@ -1,5 +1,5 @@
 
-define(["../lib/jquery.min"],function () {
+define(["jquery.min"],function () {
 
     function goTop(ct) {
         this.ct=ct;
