@@ -36,7 +36,7 @@ define(['jquery.min.js'], function() {
             $returnTop.on('click', function() {
                 $(window).scrollTop(0);
             });
-        }; createNode: function() {
+        };createNode: function() {
             $('body').append($returnTop);
         };
     };
