@@ -189,7 +189,7 @@
         }
 
         #services {
-            background: url('/senior4-3/img/2.jpg');
+            background: url('2.jpg');
             color: #fff;
             padding-top: 70px;
             padding-bottom: 70px;
@@ -252,7 +252,7 @@
         /*ship区*/
 
         #ship {
-            background: url('/senior4-3/img/3.jpg');
+            background: url('3.jpg');
             color: #fff;
             padding-top: 30px;
             padding-bottom: 10px;
@@ -330,7 +330,7 @@
         /*laser区*/
 
         #laser {
-            background: url('/senior4-3/img/4.png');
+            background: url('4.png');
             color: #fff;
             padding-top: 50px;
             padding-bottom: 50px;
@@ -402,7 +402,7 @@
         /* portfolio区 */
 
         .portfolio {
-            background: url('/senior4-3/img/4.png');
+            background: url('4.png');
             padding-top: 50px;
             padding-bottom: 50px;
         }
@@ -474,7 +474,7 @@
         /*refine区*/
 
         #refine {
-            background: url('/senior4-3/img/5.png');
+            background: url('5.png');
             color: #fff;
             padding-top: 50px;
             padding-bottom: 50px;
@@ -560,7 +560,7 @@
         #footer {
             margin: 0 auto;
             text-align: center;
-            background: url('/senior4-3/img/6.jpg');
+            background: url('6.jpg');
             background-size: 100% auto;
             color: #fff;
             font-size: 24px;
