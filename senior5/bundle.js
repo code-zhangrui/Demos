@@ -11082,7 +11082,7 @@ __webpack_require__(9)
 new GoTop;
 
 var Waterfall = __webpack_require__(7);
-new waterfall;
+new Waterfall;
 
 var Addmore = __webpack_require__(3);
 new Addmore($('.portfolio'));

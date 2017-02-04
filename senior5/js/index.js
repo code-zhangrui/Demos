@@ -9,7 +9,7 @@ require("style-loader!css-loader!../css/gotop.css")
 new GoTop;
 
 var Waterfall = require("./waterfall.js");
-new waterfall;
+new Waterfall;
 
 var Addmore = require("./addmore.js");
 new Addmore($('.portfolio'));
