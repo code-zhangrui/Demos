@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10606,76 +10606,6 @@ function updateLink(linkElement, obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(0);
-
-  function Addmore($node) {
-    this.list = $node.find('.portfolio-wrap');
-    this.getData();
-    this.click($node);
-  }
-  Addmore.prototype = {
-    getData: function() {
-      var that = this;
-      $.ajax({
-        url: './php/getData.php',
-        dataType: 'json',
-        type: 'get',
-        data: {
-          num: 6
-        }
-      }).done(function(ret) {
-        that.place(ret);
-      }).fail(function() {
-        console.log('error');
-      });
-    },
-    click: function($node) {
-      var that = this;
-      $node.find('#load').on('click', function() {
-        that.getData();
-      });
-    },
-    place: function(ret) {
-      var $nodes = this.renderData(ret),
-          deferreds = [];
-      $nodes.find('img').each(function() {
-        var defer = $.Deferred();
-        $(this).load(function() {
-          defer.resolve();
-        });
-        deferreds.push(defer);
-      });
-      $.when.apply(null, deferreds).done(function() {
-        new Waterfall($('.portfolio'));
-      });
-    },
-    renderData: function(data) {
-      var str = '';
-      for(var i = 0; i < data.length; i++) {
-        str += '<li class="item">';
-        str += '  <a class="portfolio-link" href="javascript:void(0)">';
-        str += '   <div class="portfolio-hover"><i class="fa fa-plus"></i></div>';
-        str += '   <img src="' + data[i].img_url + '" alt="roundicons">';
-        str += '  </a>';
-        str += '  <div class="portfolio-desp">';
-        str += '  <h3>' + data[i].short_name + '</h3>';
-        str += '  <p class="text-muted">' + data[i].short_intro + '</p>';
-        str += '  </div>';
-        str += '</li>';
-      }
-      var $nodes = $(str);
-      this.list.append($nodes);
-      return $nodes;
-    }
-  };
-
-  module.exports = Addmore;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $ = __webpack_require__(0);
   var Carousel = (function() {
 
     var carouselList = [];
@@ -10823,7 +10753,7 @@ var $ = __webpack_require__(0);
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(0);
@@ -10881,7 +10811,7 @@ var $ = __webpack_require__(0);
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(0);
@@ -10933,68 +10863,87 @@ var $ = __webpack_require__(0);
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(0);
+function WaterFall($node, $btn){
+	this.$node = $node;
+	this.$btn = $btn;
+	this.init();
+	this.render();
+	this.ajaxInit();
+}
+WaterFall.prototype.init = function(){
+	this.items = this.$node.children("li")
+	this.nodeWidth = this.items.width();
+	this.colNum = parseInt(this.$node.width()/this.nodeWidth);
+	this.colSumHeight = [];
+	for (var i=0;i<this.colNum;i++) {
+		this.colSumHeight.push(0);
+	}
+}
+WaterFall.prototype.render = function(){
+	var _this = this
+	this.$node.children("li").each(function(){
+		var $cur = $(this),
+			idx = 0,
+			minSumHeight = _this.colSumHeight[0];
+		for (var i=0;i<_this.colSumHeight.length;i++) {
+			if (minSumHeight > _this.colSumHeight[i]) {
+				minSumHeight = _this.colSumHeight[i];
+				idx = i;
+			}
+		}
+		// $cur.find("img").on("load", function(){
+			$cur.css({
+				left: _this.nodeWidth*idx,
+				top: minSumHeight
+			})
+			_this.colSumHeight[idx] = _this.colSumHeight[idx] + $cur.outerHeight(true);
+		// })
 
-  function Waterfall($node) {
-    this.$node = $node;
-    this.init();
-  }
-  Waterfall.prototype = {
-    init: function() {
-      this.render(this.$node);
-      this.bind(this.$node);
-    },
-    bind: function($node) {
-      var that = this;
-      $(window).on('resize', function() {
-        that.render($node);
-      });
-    },
-    render: function($node) {
-      var ctWidth = $node.find('.portfolio-wrap').width();
-      var $item = $node.find('.portfolio-wrap li');
-      var itemWidth = $item.outerWidth(true);
-      var colNum = parseInt(ctWidth / itemWidth);
-      var colSumHeight = [];
+	})
+	this.$node.height(Math.max.apply(null, this.colSumHeight))
+}
+WaterFall.prototype.ajaxInit = function(){
+	var _this = this
+	this.start = 0;
+	this.length = 6;
+	this.$btn.on("click", function(){
+		_this.$btn.text('正在加载');
+		_this.ajax();
+	})
+}
+WaterFall.prototype.ajax = function(){
+	var _this = this;
+	$.ajax({
+		url: "./php/index.php",
+		method: "POST",
+		data: {
+			start: _this.start,
+			length: _this.length
+		}
+	}).done(function(result){
+		_this.$node.append(result);
+		_this.init();
+		_this.render();
+		_this.start += _this.length;
+		_this.$btn.text("加载更多");
+	})
 
-      for(var i = 0; i < colNum; i++) {
-        colSumHeight.push(0);
-      }
-      $item.each(function() {
-        var $cur = $(this);
-        var idx = 0,
-            minSumHeight = colSumHeight[idx];
-        for(var j = 0; j < colSumHeight.length; j++) {
-          if(colSumHeight[j] < minSumHeight) {
-            idx = j;
-            minSumHeight = colSumHeight[idx];
-          }
-        }
-        $cur.css({
-          top: minSumHeight,
-          left: itemWidth * idx,
-          opacity: 1
-        });
-        colSumHeight[idx] += $cur.outerHeight(true);
-      });
-      $node.find('.portfolio-wrap').css({height: Math.max.apply(null, colSumHeight)});
-    }
-  };
-
-  module.exports = Waterfall;
+}
+module.exports = WaterFall;
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(10);
+var content = __webpack_require__(9);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(2)(content, {});
@@ -11014,13 +10963,13 @@ if(false) {
 }
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(11);
+var content = __webpack_require__(10);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
 var update = __webpack_require__(2)(content, {});
@@ -11040,7 +10989,7 @@ if(false) {
 }
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
@@ -11054,7 +11003,7 @@ exports.push([module.i, "\r\n\r\n\r\n/* carousel区 */\r\nhtml,\r\nbody,\r\n.car
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
@@ -11068,26 +11017,23 @@ exports.push([module.i, "/* goTop区 */\r\n\r\n.go-top {\r\n    position: fixed;
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(0);
 
-var Carousel = __webpack_require__(4);
-__webpack_require__(8);
+var Carousel = __webpack_require__(3);
+__webpack_require__(7);
 Carousel.init($(".carousel"));
 
-var GoTop = __webpack_require__(6);
-__webpack_require__(9)
+var GoTop = __webpack_require__(5);
+__webpack_require__(8)
 new GoTop;
 
-var Waterfall = __webpack_require__(7);
-new Waterfall;
+var WaterFall = __webpack_require__(6)
+new WaterFall($("#addmore .water-basic"), $("#addmore .btn-readmore"));
 
-var Addmore = __webpack_require__(3);
-new Addmore($('.portfolio'));
-
-var Exposure = __webpack_require__(5)
+var Exposure = __webpack_require__(4)
 new Exposure($(".exposure"));
 
 

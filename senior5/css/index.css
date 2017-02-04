@@ -291,78 +291,53 @@
             height: 200px;
             border-radius: 100%;
         }
-        /* portfolio区 */
 
-        .portfolio {
-            background: url('4.png');
-            padding-top: 50px;
-            padding-bottom: 50px;
-        }
 
-        .portfolio-wrap {
-            position: relative;
-            margin-left: -31px;
-        }
+        /*addmore*/
+.addmore {
+	text-align: center;
+  background: url('5.png');
+  color: #fff;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+.addmore h1 {
+	padding: 20px 0;
+}
+.addmore h3 {
+	padding: 20px 0;
+}
+.addmore p {
+	font-size: 14px;
+	color: 16px;
+}
+.addmore-list {
+	position: relative;
+}
+.addmore-list>li {
+	position: absolute;
+	width: 333px;
+	padding: 20px 0;
+}
+.addmore img {
+	width: 300px;
+	height: 200px;
+}
+.addmore a:hover {
+	opacity: 0.5;
+}
+.addmore .btn-readmore {
+	display: inline-block;
+	cursor: pointer;
+	color: white;
+	background-color: rgba(0,0,0,0.7);
+	padding: 5px 10px;
+	border-radius: 5px;
+}
+.addmore .btn-readmore:hover {
+	background-color: black;
+}
 
-        .portfolio-wrap li {
-            color: white;
-            position: absolute;
-            background: black;
-            width: 150px;
-            margin: 0 0 30px 30px;
-            border: 1px solid #eee;
-            opacity: 0;
-            transition: all 0.8s;
-        }
-
-        .portfolio-wrap li img {
-           width: 150px;
-        }
-
-        .portfolio-link {
-            position: relative;
-            display: block;
-        }
-
-        .portfolio-hover {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 251px;
-            font-size: 60px;
-            line-height: 251px;
-            background: rgba(254, 209, 54, .9);
-            display: none;
-        }
-
-        .portfolio-link:hover .portfolio-hover {
-            display: block;
-        }
-
-        .portfolio-wrap li:nth-of-type(odd) .portfolio-desp {
-            padding: 20px 0;
-            font-size: 16px;
-        }
-
-        .portfolio-wrap li:nth-of-type(even) .portfolio-desp {
-            padding: 50px 0;
-            font-size: 16px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 20px 40px;
-            border-radius: 3px;
-            font-size: 18px;
-            font-weight: bold;
-            background: #fed136;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: #fec503;
-        }
         /*refine区*/
 
         #refine {
