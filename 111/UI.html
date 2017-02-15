@@ -773,6 +773,7 @@ function GoTop(cla) {
     },
 
     goToTop: function() {
+      $('body,html').animate({scrollTop:0},800);
       this.$c.scrollTop(0);
     },
 
