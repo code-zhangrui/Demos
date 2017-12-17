@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from math import sqrt, acos, pi
 from decimal import Decimal, getcontext
 
@@ -144,6 +146,6 @@ class Vector(object):
 		return self.coordinates == v.coordinates
 
 
-v = Vector([1.5, 9.547, 3.691])
-w = Vector([-6.007, 0.124, 5.772])
-print(v.area_of_triangle_with(w))
+# v = Vector([1.5, 9.547, 3.691])
+# w = Vector([-6.007, 0.124, 5.772])
+# print(v.area_of_triangle_with(w))
