@@ -15,6 +15,7 @@ class Vector(object):
 				raise ValueError
 			self.coordinates = tuple([Decimal(x) for x in coordinates])
 			self.dimension = len(self.coordinates)
+			self.idx = 0
 
 		except ValueError:
 			raise ValueError('The coordinates must be nonempty')
@@ -145,6 +146,21 @@ class Vector(object):
 	def __eq__(self, v):
 		return self.coordinates == v.coordinates
 
+    # __iter__ 和 next 是一个迭代器
+	def __iter__(self):
+		return self
+
+	def next(self):
+		self.idx += 1
+		try:
+			return Decimal(self.coordinates[self.idx-1])
+		except IndexError:
+			self.idx = 0
+			raise StopIteration  # Done iterating.
+
+    # 将自己返回成 iterable 的形式
+	def __getitem__(self,index):
+		return Decimal(self.coordinates[index])
 
 # v = Vector([1.5, 9.547, 3.691])
 # w = Vector([-6.007, 0.124, 5.772])

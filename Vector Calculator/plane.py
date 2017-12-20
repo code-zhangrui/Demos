@@ -28,7 +28,7 @@ class Plane(object):
 
     def set_basepoint(self):
         try:
-            n = self.normal_vector.coordinates
+            n = self.normal_vector # 向量Vector对象不是iterable的，所以要用 .coordinates 将其转化为iterable（但 Vector 里的 __getitem__ 方法指定了其输出的必为 iterable 之后，这里就不需要这样做了）
             c = self.constant_term
             basepoint_coords = ['0']*self.dimension
 
@@ -131,14 +131,14 @@ class MyDecimal(Decimal):
     def is_near_zero(self, eps=1e-10):
         return abs(self) < eps
 
-p1 = Plane(normal_vector=Vector([-0.412,3.806,0.728]),constant_term=-3.46)
-p2 = Plane(normal_vector=Vector([1.03,-9.515,-1.82]),constant_term=8.65)
-print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))
-
-p1 = Plane(normal_vector=Vector([2.611,5.528,0.283]),constant_term=4.6)
-p2 = Plane(normal_vector=Vector([7.715,8.306,5.342]),constant_term=3.76)
-print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))
-
-p1 = Plane(Vector([-7.926,8.625,-7.212]),-7.952)
-p2 = Plane(Vector([-2.642,2.875,-2.404]),-2.443)
-print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))
+# p1 = Plane(normal_vector=Vector([-0.412,3.806,0.728]),constant_term=-3.46)
+# p2 = Plane(normal_vector=Vector([1.03,-9.515,-1.82]),constant_term=8.65)
+# print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))
+#
+# p1 = Plane(normal_vector=Vector([2.611,5.528,0.283]),constant_term=4.6)
+# p2 = Plane(normal_vector=Vector([7.715,8.306,5.342]),constant_term=3.76)
+# print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))
+#
+# p1 = Plane(Vector([-7.926,8.625,-7.212]),-7.952)
+# p2 = Plane(Vector([-2.642,2.875,-2.404]),-2.443)
+# print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))

@@ -39,7 +39,7 @@ class Line(object):
 	# 假设y=0 => (c/a,0); x轴上的一个点
 	def set_basepoint(self):
 		try:
-			n = self.normal_vector.coordinates # 向量Vector对象不是iterable的，所以要用 .coordinates 将其转化为iterable
+			n = self.normal_vector # 向量Vector对象不是iterable的，所以要用 .coordinates 将其转化为iterable（但 Vector 里的 __getitem__ 方法指定了其输出的必为 iterable 之后，这里就不需要这样做了）
 			c = self.constant_term
 			basepoint_coords = ['0']*self.dimension # 初始化一个list ['0','0']
 
