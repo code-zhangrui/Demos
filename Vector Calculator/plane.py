@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 from decimal import Decimal, getcontext
-
 from vector import Vector
 
 getcontext().prec = 30
@@ -22,22 +21,20 @@ class Plane(object):
         if not constant_term:
             constant_term = Decimal('0')
         self.constant_term = Decimal(constant_term)
-
         self.set_basepoint()
-
+    # def __getitem__(self, i):
+    #     return self.normal_vector[i]
 
     def set_basepoint(self):
         try:
             n = self.normal_vector # 向量Vector对象不是iterable的，所以要用 .coordinates 将其转化为iterable（但 Vector 里的 __getitem__ 方法指定了其输出的必为 iterable 之后，这里就不需要这样做了）
             c = self.constant_term
             basepoint_coords = ['0']*self.dimension
-
             initial_index = Plane.first_nonzero_index(n)
             initial_coefficient = n[initial_index]
 
             basepoint_coords[initial_index] = c/initial_coefficient
             self.basepoint = Vector(basepoint_coords)
-
         except Exception as e:
             if str(e) == Plane.NO_NONZERO_ELTS_FOUND_MSG:
                 self.basepoint = None
@@ -66,15 +63,19 @@ class Plane(object):
 
             if abs(coefficient) != 1:
                 output += '{}'.format(abs(coefficient))
-
             return output
 
         n = self.normal_vector
 
         try:
             initial_index = Plane.first_nonzero_index(n)
-            terms = [write_coefficient(n[i], is_initial_term=(i==initial_index)) + 'x_{}'.format(i+1)
-                     for i in range(self.dimension) if round(n[i], num_decimal_places) != 0]
+            terms = []
+            for i in range(self.dimension):
+                if round(n[i], num_decimal_places) != 0:
+                    terms.append(write_coefficient(
+                        n[i],
+                        is_initial_term=(i == initial_index)) +
+                        'x_{}'.format(i + 1))
             output = ' '.join(terms)
 
         except Exception as e:
@@ -82,7 +83,6 @@ class Plane(object):
                 output = '0'
             else:
                 raise e
-
         constant = round(self.constant_term, num_decimal_places)
         if constant % 1 == 0:
             constant = int(constant)
@@ -105,13 +105,13 @@ class Plane(object):
         return n1.is_parallel_to(n2)
 
 
-    def is_equal_to(self, p):
+    def __eq__(self, p):
         # 判断是否有法向量为 0 的情况
         if self.normal_vector.is_zero():
-            if not l.normal_vector.is_zero():
+            if not p.normal_vector.is_zero():
                 return False
             else:
-                diff = self.constant_term - l.constant_term
+                diff = self.constant_term - p.constant_term
                 return MyDecimal(diff).is_near_zero()
         elif p.normal_vector.is_zero():
             return False
@@ -119,7 +119,6 @@ class Plane(object):
         # 判断是否不平行，必要
         if not self.is_parallel_to(p):
             return False
-
         p1 = self.basepoint
         p2 = p.basepoint
         v = p1.minus(p2)
@@ -133,7 +132,7 @@ class MyDecimal(Decimal):
 
 # p1 = Plane(normal_vector=Vector([-0.412,3.806,0.728]),constant_term=-3.46)
 # p2 = Plane(normal_vector=Vector([1.03,-9.515,-1.82]),constant_term=8.65)
-# print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.is_equal_to(p2))
+# print("p1 p2 is parallel=", p1.is_parallel_to(p2), "is equal=",p1.__eq__(p2))
 #
 # p1 = Plane(normal_vector=Vector([2.611,5.528,0.283]),constant_term=4.6)
 # p2 = Plane(normal_vector=Vector([7.715,8.306,5.342]),constant_term=3.76)

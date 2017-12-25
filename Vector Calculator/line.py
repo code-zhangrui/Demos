@@ -116,7 +116,7 @@ class Line(object):
 		return n1.is_parallel_to(n2) # 定义:两条直线的法向量平行,则两条直线平行
 
 	# 两条直线是否重合
-	def is_equal_to(self,l):
+	def __eq__(self,l):
 		# 判断是否有法向量为 0 的情况
 		if self.normal_vector.is_zero():
 			if not l.normal_vector.is_zero():
